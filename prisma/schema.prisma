@@ -14,16 +14,20 @@ model Topping {
   id    String @id @default(uuid())
   name  String
   price Int
+  Food  Food[]
 }
 
 model Filling {
   id    String @id @default(uuid())
   name  String
   price Int
+  foods Food[]
 }
 
 model Food {
-  id    String @id @default(uuid())
-  name  String
-  price Int
+  id       String    @id @default(uuid())
+  name     String
+  price    Int
+  toppings Topping[]
+  fillings Filling[]
 }
