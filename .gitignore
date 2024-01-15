@@ -4,3 +4,6 @@
 /dist
 # environtments
 .env
+# sqlite
+/prisma/db.sqlite
+/prisma/db.sqlite-journal
