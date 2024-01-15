@@ -1,4 +1,5 @@
 import { FoodImplModel } from "../../models/food/food-impl.model";
+import { IFood } from "../../models/food/food.model";
 
 export function foodFactory({
   id,
@@ -8,6 +9,6 @@ export function foodFactory({
   id: string;
   name: string;
   price: number;
-}) {
+}): IFood {
   return new FoodImplModel(id, name, price);
 }

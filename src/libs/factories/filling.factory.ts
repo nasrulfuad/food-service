@@ -1,4 +1,5 @@
 import { FillingImplModel } from "../../models/filling/filling-impl.model";
+import { IFilling } from "../../models/filling/filling.model";
 
 export function fillingFactory({
   id,
@@ -8,6 +9,6 @@ export function fillingFactory({
   id: string;
   name: string;
   price: number;
-}) {
+}): IFilling {
   return new FillingImplModel(id, name, price);
 }

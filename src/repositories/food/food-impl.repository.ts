@@ -1,32 +1,39 @@
 import { PrismaClient } from "@prisma/client";
 import { foodFactory } from "../../libs/factories/food.factory";
-import { IFilling } from "../../models/filling/filling.model";
+import { IFood } from "../../models/food/food.model";
 import { IFoodRepository } from "./food.repository";
 
 export class FoodImplRepository implements IFoodRepository {
   constructor(private dataStore: PrismaClient) {}
-  findById(id: string): Promise<IFilling> {
+  findById(id: string): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
-  update(t: IFilling, id: string): Promise<IFilling> {
+  update(t: IFood, id: string): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
-  delete(t: IFilling): Promise<void> {
+  delete(t: IFood): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  create(topping: IFilling): Promise<IFilling> {
+  create(topping: IFood): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
 
-  async findAll(): Promise<IFilling[]> {
-    const toppings = await this.dataStore.food.findMany();
+  async findAll(): Promise<IFood[]> {
+    const toppings = await this.dataStore.food.findMany({
+      include: {
+        fillings: true,
+        toppings: true,
+      },
+    });
 
-    const results = toppings.map(({ id, name, price }) => {
+    const results = toppings.map(({ id, name, price, toppings, fillings }) => {
       return foodFactory({
         id,
         name,
         price,
-      });
+      })
+        .setFillings(fillings)
+        .setToppings(toppings);
     });
 
     return results;
