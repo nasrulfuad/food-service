@@ -1,5 +1,5 @@
 import { IFilling } from "./filling.model";
 
-export class FillingImpl implements IFilling {
-  constructor(public name: string, public price: number) {}
+export class FillingImplModel implements IFilling {
+  constructor(public id: string, public name: string, public price: number) {}
 }

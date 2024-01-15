@@ -29,6 +29,26 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
   }
 
+  /** FILLING ROUTES */
+  {
+    app.get(
+      "/fillings",
+      injections.filling.controller.findAll.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
+    );
+    app.post(
+      "/fillings",
+      injections.filling.controller.create.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
+    );
+    app.put(
+      "/fillings/:id",
+      injections.filling.controller.update.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
+    );
+    app.delete(
+      "/fillings/:id",
+      injections.filling.controller.delete.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
+    );
+  }
+
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     /** Add logger, custom errors, etc. */
     console.error(err.stack);

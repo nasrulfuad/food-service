@@ -15,3 +15,9 @@ model Topping {
   name  String
   price Int
 }
+
+model Filling {
+  id    String @id @default(uuid())
+  name  String
+  price Int
+}
