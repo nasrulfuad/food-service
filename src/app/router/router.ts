@@ -49,6 +49,26 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
   }
 
+  /** FOOD ROUTES */
+  {
+    app.get(
+      "/foods",
+      injections.food.controller.findAll.bind(injections.food.controller) // Bind controller to use `this` instance from DI
+    );
+    app.post(
+      "/foods",
+      injections.food.controller.create.bind(injections.food.controller) // Bind controller to use `this` instance from DI
+    );
+    app.put(
+      "/foods/:id",
+      injections.food.controller.update.bind(injections.food.controller) // Bind controller to use `this` instance from DI
+    );
+    app.delete(
+      "/foods/:id",
+      injections.food.controller.delete.bind(injections.food.controller) // Bind controller to use `this` instance from DI
+    );
+  }
+
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     /** Add logger, custom errors, etc. */
     console.error(err.stack);

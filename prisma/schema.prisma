@@ -21,3 +21,9 @@ model Filling {
   name  String
   price Int
 }
+
+model Food {
+  id    String @id @default(uuid())
+  name  String
+  price Int
+}
