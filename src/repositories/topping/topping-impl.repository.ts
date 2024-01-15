@@ -1,11 +1,23 @@
+import { PrismaClient } from "@prisma/client";
 import { ITopping } from "../../models/topping/topping.model";
 import { IToppingRepository } from "./topping.repository";
+import { toppingFactory } from "../../libs/factories/topping.factory";
 
 export class ToppingImplRepository implements IToppingRepository {
-  constructor(dataStore: ) {}
+  constructor(private dataStore: PrismaClient) {}
 
-  findAll(): Promise<ITopping[]> {
-    throw new Error("Method not implemented.");
+  async findAll(): Promise<ITopping[]> {
+    const toppings = await this.dataStore.topping.findMany();
+
+    const results = toppings.map(({ id, name, price }) => {
+      return toppingFactory({
+        id,
+        name,
+        price,
+      });
+    });
+
+    return results;
   }
   findById(id: string | undefined): Promise<ITopping> {
     throw new Error("Method not implemented.");

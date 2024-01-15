@@ -1,16 +1,16 @@
-import {
-  ToppingImpl,
-  ToppingImplModel,
-} from "../../models/topping/topping-impl.model";
+import { ToppingImplModel } from "../../models/topping/topping-impl.model";
 import { ITopping } from "../../models/topping/topping.model";
+import { IToppingRepository } from "../../repositories/topping/topping.repository";
 import { IToppingService } from "./topping.service";
 
 export class ToppingImplService implements IToppingService {
-  constructor(toppingRepo: ToppingImpl) {}
+  constructor(private toppingRepo: IToppingRepository) {}
 
   findAll(): Promise<ITopping[]> {
-    throw new Error("Method not implemented.");
+    /** Business process here */
+    return this.toppingRepo.findAll();
   }
+
   findById(id: string | undefined): Promise<ITopping> {
     throw new Error("Method not implemented.");
   }
@@ -21,6 +21,6 @@ export class ToppingImplService implements IToppingService {
     throw new Error("Method not implemented.");
   }
   async create(topping: ITopping): Promise<ITopping> {
-    return new ToppingImplModel(topping.name, topping.price);
+    return new ToppingImplModel("", topping.name, topping.price);
   }
 }
