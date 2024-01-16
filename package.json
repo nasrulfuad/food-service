@@ -14,7 +14,7 @@
     "test": "DATABASE_URL=file:./db.sqlite npm run db:migrate && npm run db:seed && jest",
     "db:migrate:dev": "npx prisma migrate dev",
     "db:migrate": "npx prisma migrate deploy",
-    "db:seed": "npx ts-node prisma/seed.ts",
+    "db:seed": "node dist/tools/generator/seed.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

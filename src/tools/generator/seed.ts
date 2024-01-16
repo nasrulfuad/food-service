@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { ITopping } from "../src/models/topping/topping.model";
-import { ToppingImplModel } from "../src/models/topping/topping-impl.model";
-import { IFilling } from "../src/models/filling/filling.model";
-import { FillingImplModel } from "../src/models/filling/filling-impl.model";
-import { IFood } from "../src/models/food/food.model";
-import { FoodImplModel } from "../src/models/food/food-impl.model";
+import { ITopping } from "../../models/topping/topping.model";
+import { ToppingImplModel } from "../../models/topping/topping-impl.model";
+import { IFilling } from "../../models/filling/filling.model";
+import { FillingImplModel } from "../../models/filling/filling-impl.model";
+import { IFood } from "../../models/food/food.model";
+import { FoodImplModel } from "../../models/food/food-impl.model";
 
 const prisma = new PrismaClient();
 
@@ -171,14 +171,6 @@ export async function runSeed() {
   await Promise.all(insertToppings);
   await Promise.all(insertFillings);
   await Promise.all(insertFoods);
-
-  const fffs = await prisma.food.findFirst({
-    include: {
-      toppings: true,
-      fillings: true,
-    },
-  });
-  console.log(fffs);
 }
 
 runSeed()
