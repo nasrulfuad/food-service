@@ -86,13 +86,14 @@ paths:
                     - 96fdf3f8-ca84-4088-bbbb-997f0cb1d8e4
                 toppingIds:
                   type: array
+                  maxItems: 1
                   items:
                     type: string
                   example: 
                      - 4d08c06d-e83d-4185-baf3-1c854329cbe3
-                     - afc79544-d68d-429c-8c43-e2610ecf8dd8
                 fillingIds:
                   type: array
+                  maxItems: 1
                   items:
                     type: string
                   example:
@@ -185,6 +186,10 @@ components:
                   type: integer
                 orderItemType:
                   type: string
+                  enum:
+                    - food
+                    - topping
+                    - filling
               required:
                 - id
                 - name
