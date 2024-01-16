@@ -63,9 +63,6 @@ export class OrderImplService implements IOrderService {
       totalPrice,
     };
 
-    console.log(orderItems);
-    console.log(totalPrice);
-    console.log(order);
     return this.orderRepo.create(order, orderItems);
   }
   findAll(): Promise<IOrder[]> {

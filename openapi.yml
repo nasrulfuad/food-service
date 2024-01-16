@@ -1,0 +1,199 @@
+openapi: '3.0.2'
+info:
+  title: Restaurant App
+  version: '1.0'
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /toppings:
+    get:
+      description: Get all toppings
+      tags: 
+        - Toppings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/topping'
+  /fillings:
+    get:
+      description: Get all fillings
+      tags: 
+        - Fillings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/filling'
+  /foods:
+    get:
+      description: Get all foods
+      tags: 
+        - Foods
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/food'
+  /orders:
+    get:
+      description: Get all orders
+      tags: 
+        - Orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/order'
+    post:
+      description: Create an order
+      tags: 
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  example: "John Doe"
+                description:
+                  type: string
+                  example: "John Doe order 1 Pizza with 2 toppings and 1 filling"
+                foodIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - 96fdf3f8-ca84-4088-bbbb-997f0cb1d8e4
+                toppingIds:
+                  type: array
+                  items:
+                    type: string
+                  example: 
+                     - 4d08c06d-e83d-4185-baf3-1c854329cbe3
+                     - afc79544-d68d-429c-8c43-e2610ecf8dd8
+                fillingIds:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - 460d3f95-8bc7-44ef-ac5d-e053dfeffa8a
+              required:
+                - userName
+                - description
+                - foodIds
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: '#/components/schemas/food'
+
+components:
+  schemas:
+    topping:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: integer
+      required:
+        - id
+        - name
+        - price
+    filling:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: integer
+      required:
+        - id
+        - name
+        - price
+    food:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: integer
+      required:
+        - id
+        - name
+        - price
+
+    order:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          userName:
+            type: string
+          totalPrice:
+            type: integer
+          description:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+          deletedAt:
+            type: string
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                price:
+                  type: integer
+                orderItemType:
+                  type: string
+              required:
+                - id
+                - name
+                - price
+                - orderItemType
+        required:
+          - id
+          - userName
+          - totalPrice
+          - description
+          - createdAt
+          - updatedAt
