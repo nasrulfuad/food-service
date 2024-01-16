@@ -1,5 +1,5 @@
 export interface ITopping {
-  id?: string;
+  id: string;
   name: string;
   price: number;
 }

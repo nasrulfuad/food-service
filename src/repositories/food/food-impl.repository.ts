@@ -5,8 +5,52 @@ import { IFoodRepository } from "./food.repository";
 
 export class FoodImplRepository implements IFoodRepository {
   constructor(private dataStore: PrismaClient) {}
-  findById(id: string): Promise<IFood> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<IFood> {
+    const food = await this.dataStore.food.findUnique({
+      where: { id },
+      include: {
+        fillings: true,
+        toppings: true,
+      },
+    });
+
+    if (!food) {
+      throw new Error("Food not found");
+    }
+
+    const { name, price, toppings, fillings } = food;
+    return foodFactory({
+      id,
+      name,
+      price,
+    })
+      .setFillings(fillings)
+      .setToppings(toppings);
+  }
+  async findByIds(ids: string[]): Promise<IFood[]> {
+    const foods = await this.dataStore.food.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      include: {
+        fillings: true,
+        toppings: true,
+      },
+    });
+
+    const results = foods.map(({ id, name, price, toppings, fillings }) => {
+      return foodFactory({
+        id,
+        name,
+        price,
+      })
+        .setFillings(fillings)
+        .setToppings(toppings);
+    });
+
+    return results;
   }
   update(t: IFood, id: string): Promise<IFood> {
     throw new Error("Method not implemented.");

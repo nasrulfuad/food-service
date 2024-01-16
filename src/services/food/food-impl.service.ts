@@ -1,23 +1,23 @@
-import { IFilling } from "../../models/filling/filling.model";
+import { IFood } from "../../models/food/food.model";
 import { IFoodRepository } from "../../repositories/food/food.repository";
 import { IFoodService } from "./food.service";
 
 export class FoodImplService implements IFoodService {
   constructor(private foodRepo: IFoodRepository) {}
-  create(t: IFilling): Promise<IFilling> {
+  create(t: IFood): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
-  findById(id: string): Promise<IFilling> {
+  findById(id: string): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
-  update(t: IFilling, id: string): Promise<IFilling> {
+  update(t: IFood, id: string): Promise<IFood> {
     throw new Error("Method not implemented.");
   }
-  delete(t: IFilling): Promise<void> {
+  delete(t: IFood): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  findAll(): Promise<IFilling[]> {
+  findAll(): Promise<IFood[]> {
     /** Business process here */
     return this.foodRepo.findAll();
   }

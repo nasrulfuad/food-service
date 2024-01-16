@@ -11,11 +11,11 @@ export class FoodImplModel implements IFood {
   getToppings(): ITopping[] {
     return this.toppings;
   }
-  setToppings(t: ITopping[]): ThisType<IFood> {
+  setToppings(t: ITopping[]): IFood {
     this.toppings.push(...t);
     return this;
   }
-  setTopping(t: ITopping): ThisType<IFood> {
+  setTopping(t: ITopping): IFood {
     this.toppings.push(t);
     return this;
   }

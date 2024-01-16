@@ -19,6 +19,26 @@ export class ToppingImplRepository implements IToppingRepository {
 
     return results;
   }
+
+  async findByIds(ids: string[]): Promise<ITopping[]> {
+    const toppings = await this.dataStore.topping.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    const results = toppings.map(({ id, name, price }) => {
+      return toppingFactory({
+        id,
+        name,
+        price,
+      });
+    });
+
+    return results;
+  }
   findById(id: string | undefined): Promise<ITopping> {
     throw new Error("Method not implemented.");
   }

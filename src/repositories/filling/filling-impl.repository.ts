@@ -8,6 +8,25 @@ export class FillingImplRepository implements IFillingRepository {
   findById(id: string): Promise<IFilling> {
     throw new Error("Method not implemented.");
   }
+  async findByIds(ids: string[]): Promise<IFilling[]> {
+    const fillings = await this.dataStore.filling.findMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    const results = fillings.map(({ id, name, price }) => {
+      return fillingFactory({
+        id,
+        name,
+        price,
+      });
+    });
+
+    return results;
+  }
   update(t: IFilling, id: string): Promise<IFilling> {
     throw new Error("Method not implemented.");
   }

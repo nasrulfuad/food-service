@@ -8,6 +8,9 @@ import { ToppingImplRepository } from "../repositories/topping/topping-impl.repo
 import { FillingImplService } from "../services/filling/filling-impl.service";
 import { FoodImplService } from "../services/food/food-impl.service";
 import { ToppingImplService } from "../services/topping/topping-impl.service";
+import { OrderImplRepository } from "../repositories/order/order-impl.repository";
+import { OrderImplService } from "../services/order/order-impl.service";
+import { OrderImplController } from "../controllers/order/order-impl.controller";
 
 export function di({ prisma }: { prisma: PrismaClient }) {
   // TOPPING
@@ -22,6 +25,15 @@ export function di({ prisma }: { prisma: PrismaClient }) {
   const foodRepository = new FoodImplRepository(prisma);
   const foodService = new FoodImplService(foodRepository);
   const foodController = new FoodImplController(foodService);
+  // ORDER
+  const orderRepository = new OrderImplRepository(prisma);
+  const orderService = new OrderImplService(
+    orderRepository,
+    foodRepository,
+    fillingRepository,
+    toppingRepository
+  );
+  const orderController = new OrderImplController(orderService);
 
   return {
     topping: {
@@ -38,6 +50,11 @@ export function di({ prisma }: { prisma: PrismaClient }) {
       controller: foodController,
       service: foodService,
       repository: foodRepository,
+    },
+    order: {
+      controller: orderController,
+      service: orderService,
+      repository: orderRepository,
     },
   };
 }

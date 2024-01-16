@@ -31,3 +31,24 @@ model Food {
   toppings Topping[]
   fillings Filling[]
 }
+
+model Order {
+  id          String    @id @default(uuid())
+  userName    String
+  totalPrice  Int
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id            String @id @default(uuid())
+  name          String
+  price         Int
+  orderItemType String // We dont use enum because sqlite does not support it
+  order         Order  @relation(fields: [orderId], references: [id])
+  orderId       String
+}

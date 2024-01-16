@@ -1,14 +1,15 @@
 import { PrismaClient } from "@prisma/client";
-import type { Express, Request, Response, NextFunction } from "express";
-import { di } from "../di";
-import { bodyValidatorMiddleware } from "../../middlewares/validator.middleware";
-import { createToppingRequest } from "../../web/topping/create-topping.request";
+import type { Express, NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
-import { updateToppingRequest } from "../../web/topping/update-topping.request";
+import { bodyValidatorMiddleware } from "../../middlewares/validator.middleware";
 import { createFillingRequest } from "../../web/filling/create-filling.request";
 import { updateFillingRequest } from "../../web/filling/update-filling.request";
 import { createFoodRequest } from "../../web/food/create-food.request";
 import { updateFoodRequest } from "../../web/food/update-food.request";
+import { createOrderRequest } from "../../web/order/create-order.request";
+import { createToppingRequest } from "../../web/topping/create-topping.request";
+import { updateToppingRequest } from "../../web/topping/update-topping.request";
+import { di } from "../di";
 
 export function router(app: Express, prisma: PrismaClient): Express {
   const injections = di({ prisma });
@@ -92,6 +93,31 @@ export function router(app: Express, prisma: PrismaClient): Express {
     app.delete(
       "/foods/:id",
       injections.food.controller.delete.bind(injections.food.controller) // Bind controller to use `this` instance from DI
+    );
+  }
+
+  /** ORDER ROUTES */
+  {
+    app.get(
+      "/orders",
+      injections.order.controller.findAll.bind(injections.order.controller) // Bind controller to use `this` instance from DI
+    );
+    app.post(
+      "/orders",
+      bodyValidatorMiddleware(createOrderRequest),
+      injections.order.controller.create.bind(injections.order.controller) // Bind controller to use `this` instance from DI
+    );
+    app.get(
+      "/orders/:id",
+      injections.order.controller.findById.bind(injections.order.controller) // Bind controller to use `this` instance from DI
+    );
+    app.put(
+      "/orders/:id",
+      injections.order.controller.update.bind(injections.order.controller) // Bind controller to use `this` instance from DI
+    );
+    app.delete(
+      "/orders/:id",
+      injections.order.controller.delete.bind(injections.order.controller) // Bind controller to use `this` instance from DI
     );
   }
 
