@@ -41,6 +41,9 @@
   },
   "jest": {
     "verbose": true,
+    "roots": [
+      "./src"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
