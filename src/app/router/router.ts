@@ -111,14 +111,6 @@ export function router(app: Express, prisma: PrismaClient): Express {
       "/orders/:id",
       injections.order.controller.findById.bind(injections.order.controller) // Bind controller to use `this` instance from DI
     );
-    app.put(
-      "/orders/:id",
-      injections.order.controller.update.bind(injections.order.controller) // Bind controller to use `this` instance from DI
-    );
-    app.delete(
-      "/orders/:id",
-      injections.order.controller.delete.bind(injections.order.controller) // Bind controller to use `this` instance from DI
-    );
   }
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

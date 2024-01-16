@@ -36,18 +36,4 @@ export class OrderImplController implements IOrderController {
       next(e);
     }
   }
-  update(
-    req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
-    res: Response<any, Record<string, any>>,
-    next: NextFunction
-  ): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
-  delete(
-    req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>,
-    res: Response<any, Record<string, any>>,
-    next: NextFunction
-  ): Promise<any> {
-    throw new Error("Method not implemented.");
-  }
 }

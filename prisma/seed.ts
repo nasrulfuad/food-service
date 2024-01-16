@@ -121,7 +121,7 @@ const foods: { food: IFood; toppingIds: string[]; fillingIds: string[] }[] = [
   },
 ];
 
-async function runSeed() {
+export async function runSeed() {
   await prisma.food.deleteMany();
   await prisma.filling.deleteMany();
   await prisma.topping.deleteMany();
