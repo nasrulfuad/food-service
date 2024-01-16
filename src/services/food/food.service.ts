@@ -2,28 +2,28 @@ import { IFood } from "../../models/food/food.model";
 
 export interface IFoodService {
   /**
-   * Create a new topping
-   * @param t Topping
+   * Create a new food
+   * @param t Food
    */
   create(t: IFood): Promise<IFood>;
   /**
-   * Get all toppings
+   * Get all foods
    */
   findAll(): Promise<IFood[]>;
   /**
-   * Get a topping by id
+   * Get a food by id
    * @param id string
    */
   findById(id: IFood["id"]): Promise<IFood>;
   /**
-   * Update an existing topping by id
-   * @param t Topping
+   * Update an existing food by id
+   * @param t Food
    * @param id string
    */
   update(t: IFood, id: IFood["id"]): Promise<IFood>;
   /**
-   * Delete topping by id topping
-   * @param t Topping
+   * Delete food by id
+   * @param t Food
    */
   delete(t: IFood): Promise<void>;
 }

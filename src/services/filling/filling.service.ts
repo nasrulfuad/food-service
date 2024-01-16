@@ -2,28 +2,28 @@ import { IFilling } from "../../models/filling/filling.model";
 
 export interface IFillingService {
   /**
-   * Create a new topping
-   * @param t Topping
+   * Create a new filling
+   * @param t Filling
    */
   create(t: IFilling): Promise<IFilling>;
   /**
-   * Get all toppings
+   * Get all fillings
    */
   findAll(): Promise<IFilling[]>;
   /**
-   * Get a topping by id
+   * Get a food by id
    * @param id string
    */
   findById(id: IFilling["id"]): Promise<IFilling>;
   /**
-   * Update an existing topping by id
-   * @param t Topping
+   * Update an existing food by id
+   * @param t Food
    * @param id string
    */
   update(t: IFilling, id: IFilling["id"]): Promise<IFilling>;
   /**
-   * Delete topping by id topping
-   * @param t Topping
+   * Delete filling by id
+   * @param t Filling
    */
   delete(t: IFilling): Promise<void>;
 }

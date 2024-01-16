@@ -1,6 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import type { Express, Request, Response, NextFunction } from "express";
 import { di } from "../di";
+import { bodyValidatorMiddleware } from "../../middlewares/validator.middleware";
+import { createToppingRequest } from "../../web/topping/create-topping.request";
+import { ZodError } from "zod";
+import { updateToppingRequest } from "../../web/topping/update-topping.request";
+import { createFillingRequest } from "../../web/filling/create-filling.request";
+import { updateFillingRequest } from "../../web/filling/update-filling.request";
+import { createFoodRequest } from "../../web/food/create-food.request";
+import { updateFoodRequest } from "../../web/food/update-food.request";
 
 export function router(app: Express, prisma: PrismaClient): Express {
   const injections = di({ prisma });
@@ -17,6 +25,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.post(
       "/toppings",
+      bodyValidatorMiddleware(createToppingRequest),
       injections.topping.controller.create.bind(injections.topping.controller) // Bind controller to use `this` instance from DI
     );
     app.get(
@@ -25,6 +34,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.put(
       "/toppings/:id",
+      bodyValidatorMiddleware(updateToppingRequest),
       injections.topping.controller.update.bind(injections.topping.controller) // Bind controller to use `this` instance from DI
     );
     app.delete(
@@ -41,6 +51,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.post(
       "/fillings",
+      bodyValidatorMiddleware(createFillingRequest),
       injections.filling.controller.create.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
     );
     app.get(
@@ -49,6 +60,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.put(
       "/fillings/:id",
+      bodyValidatorMiddleware(updateFillingRequest),
       injections.filling.controller.update.bind(injections.filling.controller) // Bind controller to use `this` instance from DI
     );
     app.delete(
@@ -65,6 +77,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.post(
       "/foods",
+      bodyValidatorMiddleware(createFoodRequest),
       injections.food.controller.create.bind(injections.food.controller) // Bind controller to use `this` instance from DI
     );
     app.get(
@@ -73,6 +86,7 @@ export function router(app: Express, prisma: PrismaClient): Express {
     );
     app.put(
       "/foods/:id",
+      bodyValidatorMiddleware(updateFoodRequest),
       injections.food.controller.update.bind(injections.food.controller) // Bind controller to use `this` instance from DI
     );
     app.delete(
@@ -82,6 +96,10 @@ export function router(app: Express, prisma: PrismaClient): Express {
   }
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof ZodError) {
+      return res.status(400).json(err.issues);
+    }
+
     /** Add logger, custom errors, etc. */
     console.error(err.stack);
     return res.status(500).send("Something broke!");
