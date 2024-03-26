@@ -14,7 +14,7 @@ import { di } from "../di";
 export function router(app: Express, prisma: PrismaClient): Express {
   const injections = di({ prisma });
 
-  app.get("/", (req, res) => {
+  app.get("/", (_, res) => {
     return res.end("Hello");
   });
 
